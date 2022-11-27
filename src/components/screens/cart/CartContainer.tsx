@@ -1,8 +1,26 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
 
 import { itemType, discountType } from '../../../types/api';
 import { currencyTypes } from '../../../types/common';
+import { CFIconLabelButton, CFBottomButton } from '../../ui';
+import AddButtonContainer from './AddButtonContainer';
+
+const styles = {
+    container: {
+        textAlign: 'center',
+        minHeight: '50vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 'calc(10px + 2vmin)',
+        color: 'black',
+        width: '100%',
+    },
+};
 
 const CURRENCY: Array<currencyTypes> = [
     { code: 'USD', simbol: '$', position: 'before' },
@@ -29,9 +47,16 @@ const CartContainer = () => {
                 setItem(itemAry);
             });
     }, []);
+    const existItem = useMemo(() => curItems.length !== 0, [curItems]);
 
     return (
         <Container maxWidth={'md'}>
+            <Grid columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={styles.container}>
+                <AddButtonContainer />
+                <Divider />
+                <Divider />
+                {existItem ? <CFBottomButton text={'완료'} variant={'contained'} /> : <></>}
+            </Grid>
         </Container>
     );
 };

@@ -5,11 +5,14 @@ export interface requestAssignCalcDataResType {
 }
 
 export interface discountType {
+    id: string;
     name: string;
     rate: number;
+    items: Array<string>;
 }
 
 export interface itemType {
+    id: string;
     count: number;
     name: string;
     price: number;
