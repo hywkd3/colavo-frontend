@@ -31,7 +31,6 @@ const CFSelectDialog = (props: CFSelectDialogProps) => {
     };
 
     const handleListItemClick = (value: itemType) => {
-        console.log('value', value);
         let index = 0;
         let isSelected = selectedList.find((item, idx) => {
             if (item.name === value.name) {
@@ -40,7 +39,7 @@ const CFSelectDialog = (props: CFSelectDialogProps) => {
             }
             return false;
         });
-        console.log('isSelected', isSelected);
+
         let result: itemType[] = [];
         if (isSelected) {
             selectedList.forEach(item => {

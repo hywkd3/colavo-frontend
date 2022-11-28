@@ -35,7 +35,7 @@ const CartContainer = () => {
     const [currencyInfo, setCurrencyInfo] = useState<any>(CURRENCY[0]);
 
     const [curItems, setCurItems] = useState<itemType[]>([]);
-    const [curDiscount, setCurDiscount] = useState<discountType[]>([]);
+    const [curDiscounts, setCurDiscounts] = useState<discountType[]>([]);
 
     useEffect(() => {
         fetch('https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData')
@@ -44,9 +44,11 @@ const CartContainer = () => {
                 let currencyInfo = CURRENCY.find(i => i.code === json.currency_code);
                 setCurrencyInfo(currencyInfo);
 
+                // 시술목록
                 let itemAry: Array<itemType> = Object.values(json.items);
                 setItem(itemAry);
 
+                // 할인목록
                 let discountAry: Array<discountType> = Object.values(json.discounts);
                 setDiscounts(discountAry);
             });
@@ -56,9 +58,9 @@ const CartContainer = () => {
     return (
         <Container maxWidth={'md'}>
             <Grid columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={styles.container}>
-                <AddButtonContainer />
+                <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
                 <Divider />
-                <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscount} setItemList={setCurItems} setDiscountList={setCurDiscount} />
+                <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} />
                 <Divider />
                 {existItem ? <CFBottomButton text={'완료'} variant={'contained'} /> : <></>}
             </Grid>

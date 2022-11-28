@@ -1,22 +1,20 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { SvgIcon } from '@mui/material';
 interface CFIconLabelButtonProps {
     text: string;
     startIcon?: any;
     endIcon?: any;
     variant?: 'outlined' | 'contained';
+    onClick?: () => void;
 }
 
 const styles = {
     button: { width: '90%' },
 };
 
-export default function CFIconLabelButton({ text, variant, startIcon, endIcon }: CFIconLabelButtonProps) {
+export default function CFIconLabelButton(props: CFIconLabelButtonProps) {
+    const { text, variant, startIcon, endIcon, onClick } = props;
     return (
-        <Button sx={styles.button} variant={variant} startIcon={startIcon} endIcon={endIcon}>
+        <Button onClick={onClick} sx={styles.button} variant={variant} startIcon={startIcon} endIcon={endIcon}>
             {text}
         </Button>
     );
