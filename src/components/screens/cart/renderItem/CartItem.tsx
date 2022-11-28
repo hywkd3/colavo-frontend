@@ -1,22 +1,14 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import List from '@mui/material/List';
+import React from 'react';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
-import { Divider } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
 
-import { convertNumToPrice, convertAryToString } from '../../../../utils/fommater';
+import { convertNumToPrice } from '../../../../utils/fommater';
 import { itemType, discountType } from '../../../../types/api';
 import { currencyTypes } from '../../../../types/common';
-import { CFSelectDialog } from '../../../ui';
 
 interface CartItemProps {
     key: string;
@@ -37,8 +29,8 @@ const CartItem = ({ item, idx, currency, itemList, discountList, setItemList, se
 
     const secondaryActionCart = (count: number, idx: number) => {
         return (
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                <Select value={`${count}`} onChange={e => handleChangeCart(idx, e)} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
+            <FormControl sx={{ minWidth: 64 }}>
+                <Select sx={{ height: 35 }} value={`${count}`} onChange={e => handleChangeCart(idx, e)} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
                     <MenuItem value={1}>1</MenuItem>
                     <MenuItem value={2}>2</MenuItem>
                     <MenuItem value={3}>3</MenuItem>
