@@ -7,6 +7,7 @@ import { itemType, discountType } from '../../../types/api';
 import { currencyTypes } from '../../../types/common';
 import { CFIconLabelButton, CFBottomButton } from '../../ui';
 import AddButtonContainer from './AddButtonContainer';
+import ItemListContainer from './ItemListContainer';
 
 const styles = {
     container: {
@@ -33,6 +34,9 @@ const CartContainer = () => {
     const [items, setItem] = useState<Array<itemType>>([]);
     const [currencyInfo, setCurrencyInfo] = useState<any>(CURRENCY[0]);
 
+    const [curItems, setCurItems] = useState<itemType[]>([]);
+    const [curDiscount, setCurDiscount] = useState<discountType[]>([]);
+
     useEffect(() => {
         fetch('https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData')
             .then(response => response.json())
@@ -40,11 +44,11 @@ const CartContainer = () => {
                 let currencyInfo = CURRENCY.find(i => i.code === json.currency_code);
                 setCurrencyInfo(currencyInfo);
 
-                let discountAry: Array<discountType> = Object.values(json.discounts);
-                setDiscounts(discountAry);
-
                 let itemAry: Array<itemType> = Object.values(json.items);
                 setItem(itemAry);
+
+                let discountAry: Array<discountType> = Object.values(json.discounts);
+                setDiscounts(discountAry);
             });
     }, []);
     const existItem = useMemo(() => curItems.length !== 0, [curItems]);
@@ -54,6 +58,7 @@ const CartContainer = () => {
             <Grid columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={styles.container}>
                 <AddButtonContainer />
                 <Divider />
+                <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscount} setItemList={setCurItems} setDiscountList={setCurDiscount} />
                 <Divider />
                 {existItem ? <CFBottomButton text={'완료'} variant={'contained'} /> : <></>}
             </Grid>

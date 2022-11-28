@@ -8,7 +8,8 @@ export interface discountType {
     id: string;
     name: string;
     rate: number;
-    items: Array<string>;
+    items: Array<itemType>;
+    isDiscount?: boolean;
 }
 
 export interface itemType {
