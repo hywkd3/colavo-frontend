@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 
 import { itemType, discountType } from '../../../types/api';
 import { currencyTypes } from '../../../types/common';
-import { CFIconLabelButton, CFBottomButton } from '../../ui';
+import { CFBottomButton } from '../../ui';
 import AddButtonContainer from './AddButtonContainer';
 import ItemListContainer from './ItemListContainer';
 

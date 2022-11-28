@@ -47,8 +47,6 @@ const ItemListContainer = ({ itemList, currency, discountList, setItemList, setD
         setTotDiscountPrice(totDiscountPriceCalc);
     }, [itemList, discountList]);
 
-    const isDiscount = useMemo(() => discountList.length !== 0, [discountList]);
-
     const getCurrencyText = (price: number): string => {
         let priceTxt = convertNumToPrice(price);
         return `${currency.position === 'before' ? currency.simbol : ' '}${priceTxt}${currency.position === 'last' ? currency.simbol : ''}`;
@@ -87,9 +85,15 @@ const ItemListContainer = ({ itemList, currency, discountList, setItemList, setD
                 })}
             </List>
             <Divider />
-            <Stack sx={{ bgcolor: 'yellow', width: '100%' }} direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2}>
+            <Stack
+                sx={{ width: '100%', position: 'fixed', height: `${existItem ? '15%' : '5%'}`, bottom: 0, maxWidth: 'md' }}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="flex-start"
+                spacing={2}
+            >
                 <Typography variant="h6" display="block" gutterBottom>
-                    합계
+                    합계:
                 </Typography>
                 <Typography variant="h5" display="block" gutterBottom>
                     {`${getCurrencyText(totPrice - totDiscountPrice)}`}
