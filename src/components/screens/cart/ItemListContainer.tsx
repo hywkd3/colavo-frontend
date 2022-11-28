@@ -24,6 +24,7 @@ interface ItemListContainerProps {
     itemList: Array<itemType>;
     currency: currencyTypes;
     discountList: Array<discountType>;
+    existItem: boolean;
     setItemList: React.Dispatch<React.SetStateAction<itemType[]>>;
     setDiscountList: React.Dispatch<React.SetStateAction<discountType[]>>;
 }
@@ -34,7 +35,7 @@ const styles = {
     },
 };
 
-const ItemListContainer = ({ itemList, currency, discountList, setItemList, setDiscountList }: ItemListContainerProps) => {
+const ItemListContainer = ({ itemList, currency, discountList, existItem, setItemList, setDiscountList }: ItemListContainerProps) => {
     const [totPrice, setTotPrice] = useState<number>(0);
     const [totDiscountPrice, setTotDiscountPrice] = useState<number>(0);
 

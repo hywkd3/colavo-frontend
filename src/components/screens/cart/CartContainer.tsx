@@ -60,7 +60,7 @@ const CartContainer = () => {
             <Grid columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={styles.container}>
                 <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
                 <Divider />
-                <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} />
+                <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
                 <Divider />
                 {existItem ? <CFBottomButton text={'완료'} variant={'contained'} /> : <></>}
             </Grid>
