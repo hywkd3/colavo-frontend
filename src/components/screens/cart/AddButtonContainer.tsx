@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
-import { CFIconLabelButton, CFAddDialog, CFFullSizeModal } from '../../ui';
+import { CFIconLabelButton, CFFullSizeModal } from '../../ui';
 import { itemType, discountType } from '../../../types/api';
 
 const styles = {
