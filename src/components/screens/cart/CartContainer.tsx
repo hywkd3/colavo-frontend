@@ -45,7 +45,7 @@ const CartContainer = () => {
             <Box>
                 <ItemListContainer currency={currencyInfo} itemList={curItems} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
             </Box>
-            <Divider />
+            {curItems.length > 0 || curDiscounts.length > 0 ? <Divider /> : <></>}
             <Box>
                 {existItem ? (
                     <>
