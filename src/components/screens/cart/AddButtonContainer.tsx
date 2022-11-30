@@ -1,9 +1,17 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import Grid from '@mui/material/Grid';
+import { Typography, Grid, ListItemText, ListItemButton, List, Divider, AppBar, Toolbar, IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 
-import { CFIconLabelButton, CFAddDialog } from '../../ui';
+import { CFIconLabelButton, CFAddDialog, CFFullSizeModal } from '../../ui';
 import { itemType, discountType } from '../../../types/api';
+
+const styles = {
+    container: {
+        my: 2,
+    },
+};
 
 interface AddButtonContainerProps {
     itemList: Array<itemType>;
@@ -20,9 +28,7 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
     const [iOpen, setIOpen] = useState(false);
     const [dOpen, setDOpen] = useState(false);
 
-    const handleIDialogClose = (val: itemType) => {
-        setIOpen(false);
-
+    const handleItemSelect = (val: itemType) => {
         // 시술 체크
         const isSelected = curItems.findIndex(item => item.name === val.name);
 
@@ -49,9 +55,7 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
         }
     };
 
-    const handleDDialogClose = (val: discountType) => {
-        setDOpen(false);
-
+    const handleDiscountSelect = (val: discountType) => {
         // 시술 체크
         const isSelected = curDiscounts.findIndex(item => item.name === val.name);
 
@@ -66,24 +70,79 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
         }
     };
 
-    const handleIDialogOpen = () => {
-        setIOpen(true);
-    };
-
     const handleDDialogOpen = () => {
         setDOpen(true);
     };
+
+    const AddItemIContents = () => {
+        return (
+            <>
+                <AppBar color="inherit" sx={{ position: 'relative' }}>
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" onClick={() => setIOpen(false)} aria-label="close">
+                            <CloseIcon />
+                        </IconButton>
+                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            시술메뉴
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <List>
+                    {itemList.map((item, idx) => (
+                        <>
+                            <ListItemButton onClick={() => handleItemSelect(item)} key={item.name}>
+                                <ListItemText primary={item.name} />
+                                {curItems.find(ele => ele.name === item.name) ? <CheckIcon /> : <></>}
+                            </ListItemButton>
+                            <Divider />
+                        </>
+                    ))}
+                </List>
+            </>
+        );
+    };
+
+    const AddItemDContents = () => {
+        return (
+            <>
+                <AppBar color="inherit" sx={{ position: 'relative' }}>
+                    <Toolbar>
+                        <IconButton edge="start" color="inherit" onClick={() => setDOpen(false)} aria-label="close">
+                            <CloseIcon />
+                        </IconButton>
+                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            할인
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <List>
+                    {discountList.map((item, idx) => (
+                        <>
+                            <ListItemButton onClick={() => handleDiscountSelect(item)} key={item.name}>
+                                <ListItemText primary={item.name} />
+                                {curDiscounts.find(ele => ele.name === item.name) ? <CheckIcon /> : <></>}
+                            </ListItemButton>
+                            <Divider />
+                        </>
+                    ))}
+                </List>
+            </>
+        );
+    };
+
     return (
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-            <Grid item xs={6}>
-                <CFIconLabelButton text={'시술'} variant={'outlined'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={handleIDialogOpen} />
+        <>
+            <Grid container sx={styles.container}>
+                <Grid xs={6}>
+                    <CFIconLabelButton text={'시술'} variant={'outlined'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setIOpen(true)} btnStyle={{ mr: 2 }} />
+                </Grid>
+                <Grid xs={6}>
+                    <CFIconLabelButton text={'할인'} variant={'contained'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setDOpen(true)} btnStyle={{ ml: 2 }} />
+                </Grid>
             </Grid>
-            <CFAddDialog itemList={itemList} open={iOpen} onClose={handleIDialogClose} />
-            <Grid item xs={6}>
-                <CFIconLabelButton text={'할인'} variant={'contained'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={handleDDialogOpen} />
-            </Grid>
-            <CFAddDialog itemList={discountList} open={dOpen} onClose={handleDDialogClose} />
-        </Grid>
+            <CFFullSizeModal open={iOpen} setOpen={setIOpen} Contents={AddItemIContents} />
+            <CFFullSizeModal open={dOpen} setOpen={setDOpen} Contents={AddItemDContents} />
+        </>
     );
 };
 export default AddButtonContainer;
