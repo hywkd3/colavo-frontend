@@ -4,10 +4,8 @@ import { TransitionProps } from '@mui/material/transitions';
 
 interface FullScreenDialogProps {
     open: boolean;
-    // itemList: any;
     Contents: () => JSX.Element;
     setOpen: (val: boolean) => void;
-    // onClose: (value?: any) => void;
 }
 
 const Transition = forwardRef(function Transition(
@@ -21,11 +19,9 @@ const Transition = forwardRef(function Transition(
 
 export default function FullScreenDialog(props: FullScreenDialogProps) {
     const { open, setOpen, Contents } = props;
-    // const [open, setOpen] = useState(false);
 
     const handleClose = () => {
         setOpen(false);
-        // onClose(false);
     };
 
     return (
