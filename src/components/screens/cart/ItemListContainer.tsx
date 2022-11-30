@@ -1,22 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Stack from '@mui/material/Stack';
-import { Divider } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
+import React, { useState, useEffect } from 'react';
+import { List, Container, Typography, Stack, Divider } from '@mui/material';
 
-import { convertNumToPrice, convertAryToString } from '../../../utils/fommater';
+import { convertNumToPrice } from '../../../utils/fommater';
 import { itemType, discountType } from '../../../types/api';
 import { currencyTypes } from '../../../types/common';
-import { CFSelectDialog } from '../../ui';
 import CartItem from './renderItem/CartItem';
 import DiscountItem from './renderItem/DiscountItem';
 
@@ -32,6 +19,15 @@ interface ItemListContainerProps {
 const styles = {
     container: {
         width: '100%',
+    },
+    total_container: {
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        direction: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch',
     },
 };
 
@@ -55,51 +51,53 @@ const ItemListContainer = ({ itemList, currency, discountList, existItem, setIte
 
     return (
         <>
-            <List sx={styles.container}>
-                {itemList?.map((v, i) => {
-                    return (
-                        <CartItem
-                            key={`cart-item-${i}`}
-                            item={v}
-                            idx={i}
-                            itemList={itemList}
-                            discountList={discountList}
-                            currency={currency}
-                            setItemList={setItemList}
-                            setDiscountList={setDiscountList}
-                        />
-                    );
-                })}
-                {discountList?.map((v, i) => {
-                    return (
-                        <DiscountItem
-                            key={`discount-item-${i}`}
-                            discount={v}
-                            idx={i}
-                            itemList={itemList}
-                            discountList={discountList}
-                            currency={currency}
-                            setItemList={setItemList}
-                            setDiscountList={setDiscountList}
-                        />
-                    );
-                })}
-            </List>
-            <Divider />
-            <Stack
-                sx={{ width: '100%', position: 'fixed', height: `${existItem ? '15%' : '5%'}`, bottom: 0, maxWidth: 'md' }}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="flex-start"
-                spacing={2}
+            <Container sx={styles.container}>
+                <List>
+                    {itemList?.map((v, i) => {
+                        return (
+                            <CartItem
+                                key={`cart-item-${i}`}
+                                item={v}
+                                idx={i}
+                                itemList={itemList}
+                                discountList={discountList}
+                                currency={currency}
+                                setItemList={setItemList}
+                                setDiscountList={setDiscountList}
+                            />
+                        );
+                    })}
+                    {discountList?.map((v, i) => {
+                        return (
+                            <DiscountItem
+                                key={`discount-item-${i}`}
+                                discount={v}
+                                idx={i}
+                                itemList={itemList}
+                                discountList={discountList}
+                                currency={currency}
+                                setItemList={setItemList}
+                                setDiscountList={setDiscountList}
+                            />
+                        );
+                    })}
+                </List>
+            </Container>
+            <Container
+                maxWidth={'md'}
+                sx={[
+                    styles.total_container,
+                    {
+                        height: `${existItem ? '15%' : '5%'}`,
+                    },
+                ]}
             >
-                <Typography variant="h6" display="block" gutterBottom>
-                    합계:
-                </Typography>
-                <Typography variant="h5" display="block" gutterBottom>
-                    {`${getCurrencyText(totPrice - totDiscountPrice)}`}
-                </Typography>
-            </Stack>
+                <Divider />
+                <Stack sx={{ my: 1 }} direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant="subtitle1">합계:</Typography>
+                    <Typography variant="h5">{`${getCurrencyText(totPrice - totDiscountPrice)}`}</Typography>
+                </Stack>
+            </Container>
         </>
     );
 };

@@ -13,9 +13,8 @@ const CURRENCY: Array<currencyTypes> = [
 ];
 
 const CartContainer = () => {
-    const [bottomDisplay, isBottomDisplay] = useState<any>(true);
-    const [discounts, setDiscounts] = useState<discountType[]>([]);
     const [items, setItem] = useState<Array<itemType>>([]);
+    const [discounts, setDiscounts] = useState<discountType[]>([]);
     const [currencyInfo, setCurrencyInfo] = useState<any>(CURRENCY[0]);
 
     const [curItems, setCurItems] = useState<itemType[]>([]);
@@ -40,11 +39,11 @@ const CartContainer = () => {
     const existItem = useMemo(() => curItems.length !== 0, [curItems]);
 
     return (
-        <Container maxWidth={'md'} sx={{ my: 0, p: 0 }}>
+        <Container maxWidth={'md'}>
             <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
             <Divider />
             <Box>
-                <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
+                <ItemListContainer currency={currencyInfo} itemList={curItems} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
             </Box>
             <Divider />
             <Box>

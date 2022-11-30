@@ -5,7 +5,21 @@ interface CFIconLabelButtonProps {
     endIcon?: JSX.Element;
     variant?: 'outlined' | 'contained';
     btnStyle?: Object;
+    btnColor?: 'primary' | 'inherit' | 'secondary' | 'success' | 'error' | 'info' | 'warning';
     onClick?: () => void;
+}
+
+const styles = {
+    button: { width: '100%' },
+};
+
+export default function CFIconLabelButton(props: CFIconLabelButtonProps) {
+    const { text, variant, startIcon, endIcon, btnStyle, btnColor, onClick } = props;
+    return (
+        <Button onClick={onClick} sx={{ ...styles.button, ...btnStyle }} color={btnColor} variant={variant} startIcon={startIcon} endIcon={endIcon}>
+            {text}
+        </Button>
+    );
 }
 
 CFIconLabelButton.defaultProps = {
@@ -13,17 +27,5 @@ CFIconLabelButton.defaultProps = {
     endIcon: <></>,
     variant: 'outlined',
     btnStyle: {},
+    btnColor: 'primary',
 };
-
-const styles = {
-    button: { width: '100%' },
-};
-
-export default function CFIconLabelButton(props: CFIconLabelButtonProps) {
-    const { text, variant, startIcon, endIcon, btnStyle, onClick } = props;
-    return (
-        <Button onClick={onClick} sx={{ ...styles.button, ...btnStyle }} variant={variant} startIcon={startIcon} endIcon={endIcon}>
-            {text}
-        </Button>
-    );
-}

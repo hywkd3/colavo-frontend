@@ -137,7 +137,7 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
                     <CFIconLabelButton text={'시술'} variant={'outlined'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setIOpen(true)} />
                 </Grid>
                 <Grid xs={6} sx={{ pl: 2 }}>
-                    <CFIconLabelButton text={'할인'} variant={'contained'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setDOpen(true)} />
+                    <CFIconLabelButton text={'할인'} btnColor={'error'} variant={'contained'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setDOpen(true)} />
                 </Grid>
             </Grid>
             <CFFullSizeModal open={iOpen} setOpen={setIOpen} Contents={AddItemIContents} />
