@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import Container from '@mui/material/Container';
-import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
+import { Divider, Container, Box } from '@mui/material';
 
 import { itemType, discountType } from '../../../types/api';
 import { currencyTypes } from '../../../types/common';
@@ -11,15 +9,14 @@ import ItemListContainer from './ItemListContainer';
 
 const styles = {
     container: {
-        textAlign: 'center',
-        minHeight: '50vh',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 'calc(10px + 2vmin)',
-        color: 'black',
         width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        color: 'black',
+        fontSize: 'calc(10px + 2vmin)',
     },
 };
 
@@ -57,13 +54,24 @@ const CartContainer = () => {
 
     return (
         <Container maxWidth={'md'}>
-            <Grid columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={styles.container}>
+            <Box>
                 <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
-                <Divider />
+            </Box>
+            <Divider />
+            <Box>
                 <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
-                <Divider />
-                {existItem ? <CFBottomButton text={'완료'} variant={'contained'} /> : <></>}
-            </Grid>
+            </Box>
+            <Divider />
+            <Box>
+                {existItem ? (
+                    <>
+                        <Divider />
+                        <CFBottomButton text={'완료'} variant={'contained'} />
+                    </>
+                ) : (
+                    <></>
+                )}
+            </Box>
         </Container>
     );
 };
