@@ -1,8 +1,7 @@
 import React from 'react';
-import ListItem from '@mui/material/ListItem';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
+import { List, ListItem, ListItemText, AppBar, Toolbar, Divider, Button, Typography, Stack, DialogContent, DialogActions } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 
 import { convertNumToPrice } from '../../../../utils/fommater';
 import { itemType, discountType } from '../../../../types/api';
@@ -28,11 +27,74 @@ const DiscountItem = ({ discount, idx, currency, itemList, discountList, setItem
         setOpen(true);
     };
 
-    const handleDialogClose = (val: itemType[]) => {
+    const handleDialogClose = () => {
         setOpen(false);
+        if (discount.items.length === 0) {
+            deleteDiscount(discount);
+        }
+    };
+    const deleteDiscount = (discount: discountType) => {
+        let tmpList = discountList.filter(element => element.name !== discount.name);
+        setDiscountList(tmpList);
+    };
+
+    const setDiscountContents = (discount: discountType) => {
+        return (
+            <>
+                <AppBar color="inherit" sx={{ position: 'relative' }}>
+                    <Toolbar>
+                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                            {discount.name}
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+                <DialogContent>
+                    <List sx={{ pt: 0 }}>
+                        {itemList.map((item, idx) => (
+                            <>
+                                <ListItem onClick={() => handleListItemClick(item)} key={item.name}>
+                                    <ListItemText primary={item.name} />
+                                    {discount.items.find(ele => ele.name === item.name) ? <CheckIcon /> : <></>}
+                                </ListItem>
+                                <Divider />
+                            </>
+                        ))}
+                    </List>
+                </DialogContent>
+                <DialogActions>
+                    <Button color={'error'} onClick={() => deleteDiscount(discount)}>
+                        삭제
+                    </Button>
+                    <Button onClick={handleDialogClose}>확인</Button>
+                </DialogActions>
+            </>
+        );
+    };
+
+    const handleListItemClick = (value: itemType) => {
+        let index = 0;
+        let isSelected = discount.items.find((item, idx) => {
+            if (item.name === value.name) {
+                index = idx;
+                return true;
+            }
+            return false;
+        });
+
+        let result: itemType[] = [];
+        if (isSelected) {
+            discount.items.forEach(item => {
+                if (item.name !== value.name) {
+                    result.push(item);
+                }
+            });
+        } else {
+            result = [...discount.items];
+            result.push(value);
+        }
 
         let tmpList = [...discountList];
-        tmpList = tmpList.map(item => (item.name === discount.name ? { ...item, items: val } : item));
+        tmpList = tmpList.map(item => (item.name === discount.name ? { ...item, items: result } : item));
         setDiscountList(tmpList);
     };
 
@@ -40,9 +102,9 @@ const DiscountItem = ({ discount, idx, currency, itemList, discountList, setItem
         return (
             <>
                 <Button variant="outlined" onClick={handleDialogOpen}>
-                    선택
+                    수정
                 </Button>
-                <CFSelectDialog itemList={itemList} selectedList={discount.items} open={open} onClose={handleDialogClose} />
+                <CFSelectDialog open={open} setOpen={setOpen} Contents={() => setDiscountContents(discount)} />
             </>
         );
     };
@@ -77,15 +139,9 @@ const DiscountItem = ({ discount, idx, currency, itemList, discountList, setItem
     return (
         <ListItem secondaryAction={secondaryActionDiscount(discount?.items, idx)}>
             <Stack spacing={1} alignItems="flex-start">
-                <Typography variant="subtitle1" display="block" gutterBottom>
-                    {discount.name}
-                </Typography>
-                <Typography variant="caption" display="block" gutterBottom>
-                    {`${getSelectedItem(discount)}`}
-                </Typography>
-                <Typography variant="caption" display="block" gutterBottom>
-                    {`-${getDiscountPrice(discount)}(${(discount.rate * 100).toFixed()}%)`}
-                </Typography>
+                <Typography variant="subtitle1">{discount.name}</Typography>
+                <Typography variant="caption" sx={{ color: 'gray' }}>{`${getSelectedItem(discount)}`}</Typography>
+                <Typography variant="caption" sx={{ color: 'red' }}>{`-${getDiscountPrice(discount)}(${(discount.rate * 100).toFixed()}%)`}</Typography>
             </Stack>
         </ListItem>
     );

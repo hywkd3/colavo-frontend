@@ -1,63 +1,32 @@
 import React, { useState } from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Dialog from '@mui/material/Dialog';
+import { List, ListItem, ListItemText, DialogTitle, Dialog } from '@mui/material';
 
 import { itemType } from '../../types/api';
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
-
 interface CFSelectDialogProps {
+    size: false | undefined;
     open: boolean;
-    itemList: itemType[];
-    selectedList: itemType[];
-    onClose: (value: itemType[]) => void;
+    setOpen: (value: boolean) => void;
+    Contents: () => JSX.Element;
 }
 
 const CFSelectDialog = (props: CFSelectDialogProps) => {
-    const { onClose, itemList, selectedList, open } = props;
+    const { open, setOpen, Contents, size } = props;
 
     const handleClose = () => {
-        onClose(selectedList);
-    };
-
-    const handleListItemClick = (value: itemType) => {
-        let index = 0;
-        let isSelected = selectedList.find((item, idx) => {
-            if (item.name === value.name) {
-                index = idx;
-                return true;
-            }
-            return false;
-        });
-
-        let result: itemType[] = [];
-        if (isSelected) {
-            selectedList.forEach(item => {
-                if (item.name !== value.name) {
-                    result.push(item);
-                }
-            });
-        } else {
-            result = [...selectedList];
-            result.push(value);
-        }
-        onClose(result);
+        setOpen(false);
     };
 
     return (
-        <Dialog onClose={handleClose} open={open}>
-            <DialogTitle>시술 선택</DialogTitle>
-            <List sx={{ pt: 0 }}>
-                {itemList.map((item, idx) => (
-                    <ListItem onClick={() => handleListItemClick(item)} key={item.name}>
-                        <ListItemText primary={item.name} />
-                    </ListItem>
-                ))}
-            </List>
+        <Dialog onClose={handleClose} open={open} maxWidth={size} fullWidth={true}>
+            <Contents />
         </Dialog>
     );
 };
+
+CFSelectDialog.defaultProps = {
+    open: false,
+    size: 'sm',
+};
+
 export default CFSelectDialog;
