@@ -133,11 +133,11 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
     return (
         <>
             <Grid container sx={styles.container}>
-                <Grid xs={6}>
-                    <CFIconLabelButton text={'시술'} variant={'outlined'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setIOpen(true)} btnStyle={{ mr: 2 }} />
+                <Grid xs={6} sx={{ pr: 2 }}>
+                    <CFIconLabelButton text={'시술'} variant={'outlined'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setIOpen(true)} />
                 </Grid>
-                <Grid xs={6}>
-                    <CFIconLabelButton text={'할인'} variant={'contained'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setDOpen(true)} btnStyle={{ ml: 2 }} />
+                <Grid xs={6} sx={{ pl: 2 }}>
+                    <CFIconLabelButton text={'할인'} variant={'contained'} startIcon={<AddCircleOutlineOutlinedIcon />} onClick={() => setDOpen(true)} />
                 </Grid>
             </Grid>
             <CFFullSizeModal open={iOpen} setOpen={setIOpen} Contents={AddItemIContents} />

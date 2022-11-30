@@ -7,19 +7,6 @@ import { CFBottomButton } from '../../ui';
 import AddButtonContainer from './AddButtonContainer';
 import ItemListContainer from './ItemListContainer';
 
-const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 'calc(10px + 2vmin)',
-    },
-};
-
 const CURRENCY: Array<currencyTypes> = [
     { code: 'USD', simbol: '$', position: 'before' },
     { code: 'KRW', simbol: '원', position: 'last' },
@@ -53,10 +40,8 @@ const CartContainer = () => {
     const existItem = useMemo(() => curItems.length !== 0, [curItems]);
 
     return (
-        <Container maxWidth={'md'}>
-            <Box>
-                <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
-            </Box>
+        <Container maxWidth={'md'} sx={{ my: 0, p: 0 }}>
+            <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
             <Divider />
             <Box>
                 <ItemListContainer itemList={curItems} currency={currencyInfo} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
@@ -65,7 +50,6 @@ const CartContainer = () => {
             <Box>
                 {existItem ? (
                     <>
-                        <Divider />
                         <CFBottomButton text={'완료'} variant={'contained'} />
                     </>
                 ) : (

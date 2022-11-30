@@ -24,9 +24,12 @@ const styles = {
     bottom_container: {
         position: 'fixed',
         bottom: 0,
-        maxWidth: 'md',
+        left: 0,
+        right: 0,
         height: '10%',
-        bgcolor: '#a4c1ff',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     bottom_button: {
         mt: 2,
