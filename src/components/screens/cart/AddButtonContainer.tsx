@@ -39,6 +39,7 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
             setCurItems([...curItems, val]);
         } else {
             let result = [...curItems];
+            curItems[isSelected].count = 1;
             result.splice(isSelected, 1);
             setCurItems(result);
 
@@ -71,10 +72,6 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
             result.splice(isSelected, 1);
             setCurDiscounts(result);
         }
-    };
-
-    const handleDDialogOpen = () => {
-        setDOpen(true);
     };
 
     const AppBarContents = (title: string = 'TITLE', setOpen: (value: boolean) => void): JSX.Element => {
