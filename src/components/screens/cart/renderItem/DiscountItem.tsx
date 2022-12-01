@@ -34,6 +34,7 @@ const DiscountItem = ({ discount, idx, currency, itemList, discountList, setItem
     const deleteDiscount = (discount: discountType) => {
         let tmpList = discountList.filter(element => element.name !== discount.name);
         setDiscountList(tmpList);
+        setOpen(false);
     };
 
     const setDiscountContents = (discount: discountType) => {
