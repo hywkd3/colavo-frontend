@@ -77,19 +77,25 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
         setDOpen(true);
     };
 
+    const AppBarContents = (title: string = 'TITLE', setOpen: (value: boolean) => void): JSX.Element => {
+        return (
+            <AppBar color="inherit" sx={{ position: 'relative' }}>
+                <Toolbar>
+                    <IconButton edge="start" color="inherit" onClick={() => setOpen(false)} aria-label="close">
+                        <CloseIcon />
+                    </IconButton>
+                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                        {title}
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+        );
+    };
+
     const AddItemIContents = () => {
         return (
             <>
-                <AppBar color="inherit" sx={{ position: 'relative' }}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={() => setIOpen(false)} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            시술메뉴
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+                {AppBarContents('시술메뉴', setIOpen)}
                 <List>
                     {itemList.map((item, idx) => (
                         <>
@@ -115,16 +121,7 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
     const AddItemDContents = () => {
         return (
             <>
-                <AppBar color="inherit" sx={{ position: 'relative' }}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={() => setDOpen(false)} aria-label="close">
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            할인
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
+                {AppBarContents('할인', setDOpen)}
                 <List>
                     {discountList.map((item, idx) => (
                         <>
