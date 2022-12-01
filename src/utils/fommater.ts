@@ -1,3 +1,5 @@
+import { currencyTypes } from '../types/common';
+
 export const convertNumToPrice = (price: string | number | null | undefined) => {
     if (!price) {
         return 0;
@@ -33,4 +35,9 @@ export const convertAryToString = (array: string[]) => {
     let aryString = array.reduce((acc: string, item: string) => (acc += `${item}, `));
     aryString = aryString.slice(0, -2);
     return aryString;
+};
+
+export const getCurrencyText = (currency: currencyTypes, price: number): string => {
+    let priceTxt = convertNumToPrice(price);
+    return `${currency.position === 'before' ? currency.simbol : ' '}${priceTxt}${currency.position === 'last' ? currency.simbol : ''}`;
 };

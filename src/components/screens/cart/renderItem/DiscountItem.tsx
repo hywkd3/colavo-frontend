@@ -1,9 +1,8 @@
 import React from 'react';
 import { List, ListItem, ListItemText, AppBar, Toolbar, Divider, Button, Typography, Stack, DialogContent, DialogActions } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 
-import { convertNumToPrice } from '../../../../utils/fommater';
+import { convertNumToPrice, getCurrencyText } from '../../../../utils/fommater';
 import { itemType, discountType } from '../../../../types/api';
 import { currencyTypes } from '../../../../types/common';
 import { CFSelectDialog } from '../../../ui';
@@ -18,7 +17,6 @@ interface DiscountItemProps {
     setItemList: React.Dispatch<React.SetStateAction<itemType[]>>;
     setDiscountList: React.Dispatch<React.SetStateAction<discountType[]>>;
 }
-
 const DiscountItem = ({ discount, idx, currency, itemList, discountList, setItemList, setDiscountList }: DiscountItemProps) => {
     const [open, setOpen] = React.useState(false);
     // const [selectedValue, setSelectedValue] = React.useState(emails[1]);
@@ -53,7 +51,10 @@ const DiscountItem = ({ discount, idx, currency, itemList, discountList, setItem
                         {itemList.map((item, idx) => (
                             <>
                                 <ListItem onClick={() => handleListItemClick(item)} key={item.name}>
-                                    <ListItemText primary={item.name} />
+                                    <ListItemText
+                                        primary={item.name}
+                                        secondary={<Typography sx={{ display: 'inline' }} component="span" variant="caption" color="text.primary">{`가격: ${getCurrencyText(item.price)}`}</Typography>}
+                                    />
                                     {discount.items.find(ele => ele.name === item.name) ? <CheckIcon /> : <></>}
                                 </ListItem>
                                 <Divider />

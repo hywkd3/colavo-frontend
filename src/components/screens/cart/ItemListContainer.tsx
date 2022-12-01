@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { List, Container, Typography, Stack, Divider } from '@mui/material';
 
-import { convertNumToPrice } from '../../../utils/fommater';
+import { getCurrencyText } from '../../../utils/fommater';
 import { itemType, discountType } from '../../../types/api';
 import { currencyTypes } from '../../../types/common';
 import CartItem from './renderItem/CartItem';
@@ -44,10 +44,10 @@ const ItemListContainer = ({ itemList, currency, discountList, existItem, setIte
         setTotDiscountPrice(totDiscountPriceCalc);
     }, [itemList, discountList]);
 
-    const getCurrencyText = (price: number): string => {
-        let priceTxt = convertNumToPrice(price);
-        return `${currency.position === 'before' ? currency.simbol : ' '}${priceTxt}${currency.position === 'last' ? currency.simbol : ''}`;
-    };
+    // const getCurrencyText = (price: number): string => {
+    //     let priceTxt = convertNumToPrice(price);
+    //     return `${currency.position === 'before' ? currency.simbol : ' '}${priceTxt}${currency.position === 'last' ? currency.simbol : ''}`;
+    // };
 
     return (
         <>
@@ -95,7 +95,7 @@ const ItemListContainer = ({ itemList, currency, discountList, existItem, setIte
                 <Divider />
                 <Stack sx={{ my: 1 }} direction="row" justifyContent="space-between" alignItems="center">
                     <Typography variant="subtitle1">합계:</Typography>
-                    <Typography variant="h5">{`${getCurrencyText(totPrice - totDiscountPrice)}`}</Typography>
+                    <Typography variant="h5">{`${getCurrencyText(currency, totPrice - totDiscountPrice)}`}</Typography>
                 </Stack>
             </Container>
         </>

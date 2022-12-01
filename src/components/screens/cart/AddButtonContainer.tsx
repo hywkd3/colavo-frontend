@@ -6,6 +6,8 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 
 import { CFIconLabelButton, CFFullSizeModal } from '../../ui';
 import { itemType, discountType } from '../../../types/api';
+import { currencyTypes } from '../../../types/common';
+import { getCurrencyText } from '../../../utils/fommater';
 
 const styles = {
     container: {
@@ -14,6 +16,7 @@ const styles = {
 };
 
 interface AddButtonContainerProps {
+    currency: currencyTypes;
     itemList: Array<itemType>;
     discountList: Array<discountType>;
     curItems: Array<itemType>;
@@ -23,7 +26,7 @@ interface AddButtonContainerProps {
 }
 
 const AddButtonContainer = (props: AddButtonContainerProps) => {
-    const { itemList, discountList, curItems, curDiscounts, setCurItems, setCurDiscounts } = props;
+    const { currency, itemList, discountList, curItems, curDiscounts, setCurItems, setCurDiscounts } = props;
 
     const [iOpen, setIOpen] = useState(false);
     const [dOpen, setDOpen] = useState(false);
@@ -91,7 +94,14 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
                     {itemList.map((item, idx) => (
                         <>
                             <ListItemButton onClick={() => handleItemSelect(item)} key={item.name}>
-                                <ListItemText primary={item.name} />
+                                <ListItemText
+                                    primary={item.name}
+                                    secondary={
+                                        <Typography sx={{ display: 'inline' }} component="span" variant="caption" color="text.primary">
+                                            {`가격: ${getCurrencyText(currency, item.price)}`}
+                                        </Typography>
+                                    }
+                                />
                                 {curItems.find(ele => ele.name === item.name) ? <CheckIcon /> : <></>}
                             </ListItemButton>
                             <Divider />
@@ -119,7 +129,14 @@ const AddButtonContainer = (props: AddButtonContainerProps) => {
                     {discountList.map((item, idx) => (
                         <>
                             <ListItemButton onClick={() => handleDiscountSelect(item)} key={item.name}>
-                                <ListItemText primary={item.name} />
+                                <ListItemText
+                                    primary={item.name}
+                                    secondary={
+                                        <Typography sx={{ display: 'inline' }} component="span" variant="caption" color="text.primary">
+                                            {`할인: ${(item.rate * 100).toFixed()}%`}
+                                        </Typography>
+                                    }
+                                />
                                 {curDiscounts.find(ele => ele.name === item.name) ? <CheckIcon /> : <></>}
                             </ListItemButton>
                             <Divider />

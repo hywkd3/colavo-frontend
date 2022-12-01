@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-import { convertNumToPrice } from '../../../../utils/fommater';
+import { convertNumToPrice, getCurrencyText } from '../../../../utils/fommater';
 import { itemType, discountType } from '../../../../types/api';
 import { currencyTypes } from '../../../../types/common';
 

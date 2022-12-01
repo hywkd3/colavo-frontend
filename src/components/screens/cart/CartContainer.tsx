@@ -40,7 +40,15 @@ const CartContainer = () => {
 
     return (
         <Container maxWidth={'md'}>
-            <AddButtonContainer itemList={items} discountList={discounts} curItems={curItems} curDiscounts={curDiscounts} setCurItems={setCurItems} setCurDiscounts={setCurDiscounts} />
+            <AddButtonContainer
+                currency={currencyInfo}
+                itemList={items}
+                discountList={discounts}
+                curItems={curItems}
+                curDiscounts={curDiscounts}
+                setCurItems={setCurItems}
+                setCurDiscounts={setCurDiscounts}
+            />
             <Divider />
             <Box>
                 <ItemListContainer currency={currencyInfo} itemList={curItems} discountList={curDiscounts} setItemList={setCurItems} setDiscountList={setCurDiscounts} existItem={existItem} />
